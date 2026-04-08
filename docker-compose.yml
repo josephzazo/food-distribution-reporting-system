@@ -4,7 +4,13 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-    command: sh -c "python -m http.server 8000"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: "5432"
+      DATABASE_NAME: app
+      DATABASE_USER: app
+      DATABASE_PASSWORD: app
+    command: sh -c "pip install -r requirements.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload" 
     ports:
       - "8000:8000"
     depends_on:
